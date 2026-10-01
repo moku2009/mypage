@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雨音とき - ポータルサイト</title>
+    <!-- Tailwind CSS (デザイン用) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome (アイコン用) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js (グラフ用) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex h-screen overflow-hidden">
+
+    <!-- 左サイドバー -->
+    <aside class="w-64 bg-white shadow-md flex flex-col z-10">
+        <!-- プロフィール -->
+        <div class="p-4 border-b flex items-center gap-3 bg-gray-50">
+            <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=T" alt="Avatar" class="rounded-full w-10 h-10">
+            <div>
+                <h2 class="font-bold text-sm">雨音とき</h2>
+                <p class="text-xs text-gray-500">amanetoki.com</p>
+            </div>
+        </div>
+        
+        <!-- ナビゲーション -->
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <button onclick="switchTab('home')" id="btn-home" class="w-full flex items-center gap-3 p-3 rounded-lg text-blue-600 bg-blue-50 font-medium transition">
+                <i class="fa-solid fa-house w-5"></i> ホーム
+            </button>
+            <a href="https://twitter.com/your_twitter" target="_blank" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 text-gray-600 transition">
+                <i class="fa-brands fa-x-twitter w-5"></i> Twitter (X)
+            </a>
+            <a href="https://vrchat.com/home/user/usr_xxxxxxxx" target="_blank" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 text-gray-600 transition">
+                <i class="fa-solid fa-gamepad w-5"></i> VRChat
+            </a>
+            <button onclick="switchTab('server')" id="btn-server" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 text-gray-600 transition">
+                <i class="fa-solid fa-chart-line w-5"></i> サーバー監視
+            </button>
+        </nav>
+        
+        <div class="p-4 text-xs text-gray-400 border-t">
+            &copy; 2026 雨音とき
+        </div>
+    </aside>
+
+    <!-- メインコンテンツ -->
+    <main class="flex-1 overflow-y-auto p-8">
+        
+        <!-- ホーム画面 -->
+        <div id="tab-home" class="block">
+            <h1 class="text-2xl font-bold mb-6">ポートフォリオ</h1>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-6 flex items-center gap-6">
+                <img src="https://placehold.co/100x100/8b5cf6/ffffff?text=Avatar" alt="Avatar" class="rounded-full w-24 h-24 border-4 border-blue-100">
+                <div>
+                    <h2 class="text-xl font-bold mb-2">雨音とき</h2>
+                    <p class="text-gray-600 mb-4">はじめまして！自宅でProxmoxクラスタを運用したり、VRChatで遊んだりしています。よろしくお願いします。</p>
+                    <div class="flex gap-4">
+                        <a href="https://twitter.com/your_twitter" target="_blank" class="bg-black text-white px-4 py-2 rounded-lg text-sm hover:opacity-80 transition"><i class="fa-brands fa-x-twitter mr-2"></i>Twitter</a>
+                        <a href="https://vrchat.com/home/user/usr_xxxxxxxx" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:opacity-80 transition"><i class="fa-solid fa-gamepad mr-2"></i>VRChat</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="font-bold mb-3"><i class="fa-solid fa-code text-blue-500 mr-2"></i>スキル・趣味</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>Proxmox / 自宅サーバー構築</li>
+                        <li>VRChat / 3Dモデリング</li>
+                        <li>Web開発 (勉強中)</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h3 class="font-bold mb-3"><i class="fa-solid fa-link text-blue-500 mr-2"></i>リンク集</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="#" class="hover:text-blue-500 transition"><i class="fa-solid fa-blog mr-2"></i>ブログ</a></li>
+                        <li><a href="#" class="hover:text-blue-500 transition"><i class="fa-brands fa-github mr-2"></i>GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- サーバー監視画面 -->
+        <div id="tab-server" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold">サーバー情報 ＞ サーバー統計</h1>
+                <div class="text-sm text-gray-500 bg-white px-3 py-1 rounded-lg shadow-sm">
+                    <i class="fa-solid fa-circle text-green-500 text-xs mr-1"></i> 接続中 (ダミーデータ)
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- CPUカード -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold"><i class="fa-solid fa-microchip text-blue-500 mr-2"></i>CPU</h3>
+                        <span class="text-sm text-gray-500">13th Gen Intel Core i7-13700</span>
+                    </div>
+                    <div class="h-40">
+                        <canvas id="cpuChart"></canvas>
+                    </div>
+                    <div class="mt-4 flex justify-between text-sm">
+                        <div><span class="text-gray-500">使用率</span><br><span class="font-bold text-lg" id="cpu-usage">28%</span></div>
+                        <div><span class="text-gray-500">速度</span><br><span class="font-bold text-lg">4.18 GHz</span></div>
+                    </div>
+                </div>
+
+                <!-- メモリカード -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold"><i class="fa-solid fa-memory text-blue-500 mr-2"></i>メモリ</h3>
+                        <span class="text-sm text-gray-500">64.0 GB DDR5</span>
+                    </div>
+                    <div class="h-40">
+                        <canvas id="memChart"></canvas>
+                    </div>
+                    <div class="mt-4 flex justify-between text-sm">
+                        <div><span class="text-gray-500">使用中</span><br><span class="font-bold text-lg">23.0 GB</span></div>
+                        <div><span class="text-gray-500">利用可能</span><br><span class="font-bold text-lg">40.8 GB</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // タブ切り替えの処理
+        function switchTab(tab) {
+            document.getElementById('tab-home').classList.add('hidden');
+            document.getElementById('tab-server').classList.add('hidden');
+            document.getElementById('btn-home').className = "w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 text-gray-600 transition";
+            document.getElementById('btn-server').className = "w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 text-gray-600 transition";
+
+            if(tab === 'home') {
+                document.getElementById('tab-home').classList.remove('hidden');
+                document.getElementById('btn-home').className = "w-full flex items-center gap-3 p-3 rounded-lg text-blue-600 bg-blue-50 font-medium transition";
+            } else {
+                document.getElementById('tab-server').classList.remove('hidden');
+                document.getElementById('btn-server').className = "w-full flex items-center gap-3 p-3 rounded-lg text-blue-600 bg-blue-50 font-medium transition";
+            }
+        }
+
+        // グラフの初期設定 (Chart.js)
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { x: { display: false }, y: { display: false, min: 0, max: 100 } },
+            elements: { point: { radius: 0 } }
+        };
+
+        // CPUグラフ
+        const cpuCtx = document.getElementById('cpuChart').getContext('2d');
+        const cpuChart = new Chart(cpuCtx, {
+            type: 'line',
+            data: {
+                labels: Array(30).fill(''),
+                datasets: [{
+                    data: Array(30).fill(20),
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: commonOptions
+        });
+
+        // メモリグラフ
+        const memCtx = document.getElementById('memChart').getContext('2d');
+        const memChart = new Chart(memCtx, {
+            type: 'line',
+            data: {
+                labels: Array(30).fill(''),
+                datasets: [{
+                    data: Array(30).fill(50),
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: commonOptions
+        });
+
+        // ダミーデータを動かすアニメーション (APIが繋がるまでの演出)
+        setInterval(() => {
+            // CPU
+            const newCpuData = cpuChart.data.datasets[0].data;
+            newCpuData.shift();
+            const newCpuVal = Math.floor(Math.random() * 40) + 10;
+            newCpuData.push(newCpuVal);
+            cpuChart.update();
+            document.getElementById('cpu-usage').innerText = newCpuVal + '%';
+
+            // メモリ
+            const newMemData = memChart.data.datasets[0].data;
+            newMemData.shift();
+            const newMemVal = Math.floor(Math.random() * 20) + 40;
+            newMemData.push(newMemVal);
+            memChart.update();
+        }, 2000); // 2秒ごとに更新
+    </script>
+</body>
+</html>
